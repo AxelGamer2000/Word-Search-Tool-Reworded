@@ -21,7 +21,7 @@ class PlainTextEditFile(QPlainTextEdit):
 
         if platform.system() == "Windows":
             if unparse.startswith('/') and unparse[2] == ':':
-                path_str = unparse.lstrip('/')
+                unparse = unparse.lstrip('/')
 
         path = Path(unparse)
 
