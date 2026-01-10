@@ -1,5 +1,6 @@
 from PySide6.QtWidgets import QPlainTextEdit, QPushButton, QFileDialog
 from pathlib import Path
+from urllib.parse import unquote
 
 class PlainTextEditFile(QPlainTextEdit):
     def __init__(self, parent):
@@ -15,7 +16,8 @@ class PlainTextEditFile(QPlainTextEdit):
         e.accept()
 
     def dropEvent(self, e, /):
-        path = Path(e.mimeData().text().replace("file:", ""))
+        unparse = unquote(e.mimeData().text().replace("file:", "")).strip()
+        path = Path(unparse)
 
         super().dropEvent(e)
         self.setPlainText(path.read_text(encoding="utf-8"))
