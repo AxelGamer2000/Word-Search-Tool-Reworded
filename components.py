@@ -17,7 +17,7 @@ class PlainTextEditFile(QPlainTextEdit):
         e.accept()
 
     def dropEvent(self, e, /):
-        unparse = unquote(e.mimeData().text().replace("file:", "")).strip()
+        unparse = unquote(e.mimeData().urls()[0].toLocalFile()).strip()
 
         if platform.system() == "Windows":
             if unparse.startswith('/') and unparse[2] == ':':
