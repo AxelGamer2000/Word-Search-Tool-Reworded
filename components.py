@@ -1,6 +1,7 @@
 from PySide6.QtWidgets import QPlainTextEdit, QPushButton, QFileDialog
 from pathlib import Path
 from urllib.parse import unquote
+import platform
 
 class PlainTextEditFile(QPlainTextEdit):
     def __init__(self, parent):
@@ -17,6 +18,11 @@ class PlainTextEditFile(QPlainTextEdit):
 
     def dropEvent(self, e, /):
         unparse = unquote(e.mimeData().text().replace("file:", "")).strip()
+
+        if platform.system() == "Windows":
+            if unparse.startswith('/') and unparse[2] == ':':
+                path_str = unparse.lstrip('/')
+
         path = Path(unparse)
 
         super().dropEvent(e)
